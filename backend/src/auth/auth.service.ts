@@ -11,11 +11,10 @@ export class AuthService {
     ) { }
 
     async register(userDto: any) {
-        // Encriptación pura y dura. 10 saltos de seguridad es el estándar.
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(userDto.password, salt);
 
-        // Mandas a guardar a la BD con la contraseña ya hasheada
+
         return this.usersService.create({ ...userDto, password: hashedPassword });
     }
 
@@ -25,13 +24,13 @@ export class AuthService {
             throw new UnauthorizedException('Credenciales inválidas');
         }
 
-        // Comparamos la contraseña en texto plano que llega con el hash de la BD
+
         const isMatch = await bcrypt.compare(pass, user.password);
         if (!isMatch) {
             throw new UnauthorizedException('Credenciales inválidas');
         }
 
-        // Si pasa, armamos el payload del JWT
+
         const payload = { sub: user.id, email: user.email };
         return {
             access_token: await this.jwtService.signAsync(payload),

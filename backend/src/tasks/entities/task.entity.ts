@@ -15,7 +15,7 @@ export class Task {
     @ManyToOne(() => User, (user) => user.tasks)
     user: User;
 
-    // Esto cumple el requisito del SOFT DELETE
+
     @DeleteDateColumn()
     deletedAt: Date;
 }

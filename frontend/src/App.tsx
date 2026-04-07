@@ -12,16 +12,16 @@ function App() {
   const [view, setView] = useState<'login' | 'register'>('login');
   const [message, setMessage] = useState('');
 
-  // Auth fields
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Tasks
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
 
-  // User info
+
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function App() {
     } catch (err) { console.error(err); }
   };
 
-  // ── REGISTER ──
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');
@@ -58,7 +58,7 @@ function App() {
     }
   };
 
-  // ── LOGIN ──
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');
@@ -72,7 +72,7 @@ function App() {
     }
   };
 
-  // ── LOGOUT ──
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken(null);
@@ -80,7 +80,7 @@ function App() {
     setUserName('');
   };
 
-  // ── CREATE TASK ──
+
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTask.trim()) return;
@@ -89,21 +89,18 @@ function App() {
     fetchTasks();
   };
 
-  // ── TOGGLE COMPLETED ──
+
   const handleToggle = async (id: number, completed: boolean) => {
     await api.put(`/tasks/${id}`, { completed: !completed });
     fetchTasks();
   };
 
-  // ── DELETE (SOFT DELETE) ──
+
   const handleDelete = async (id: number) => {
     await api.delete(`/tasks/${id}`);
     fetchTasks();
   };
 
-  // ═══════════════════════════════════════
-  // Si NO hay token → mostrar Login/Register
-  // ═══════════════════════════════════════
   if (!token) {
     return (
       <div style={styles.container}>
@@ -178,9 +175,6 @@ function App() {
     );
   }
 
-  // ═══════════════════════════════════════
-  // Si HAY token → mostrar Tareas
-  // ═══════════════════════════════════════
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -233,7 +227,7 @@ function App() {
   );
 }
 
-// ── Estilos inline básicos ──
+
 const styles: Record<string, React.CSSProperties> = {
   container: {
     maxWidth: '500px',

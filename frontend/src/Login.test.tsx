@@ -7,7 +7,6 @@ describe('Login Component', () => {
     const mockOnLoginSuccess = vi.fn();
     render(<Login onLoginSuccess={mockOnLoginSuccess} />);
 
-    // Verificar que los campos del formulario están presentes
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
     expect(screen.getByText('Entrar')).toBeInTheDocument();

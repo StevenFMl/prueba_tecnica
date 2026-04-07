@@ -10,18 +10,17 @@ export class TasksService {
   constructor(
     @InjectRepository(Task)
     private readonly taskRepository: Repository<Task>,
-  ) {}
+  ) { }
 
   async create(createTaskDto: CreateTaskDto, userId: number): Promise<Task> {
     const task = this.taskRepository.create({
       ...createTaskDto,
-      user: { id: userId }, // Asigna la relación ManyToOne con solo el id
+      user: { id: userId },
     });
     return this.taskRepository.save(task);
   }
 
   async findAll(userId: number): Promise<Task[]> {
-    // TypeORM filtra automáticamente los soft-deleted gracias a @DeleteDateColumn
     return this.taskRepository.find({
       where: { user: { id: userId } },
       order: { id: 'DESC' },
@@ -39,14 +38,14 @@ export class TasksService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto, userId: number): Promise<Task> {
-    const task = await this.findOne(id, userId); // Verifica que exista y pertenezca al usuario
+    const task = await this.findOne(id, userId);
     Object.assign(task, updateTaskDto);
     return this.taskRepository.save(task);
   }
 
   async softDelete(id: number, userId: number): Promise<{ message: string }> {
-    const task = await this.findOne(id, userId); // Verifica que exista y pertenezca al usuario
-    await this.taskRepository.softRemove(task); // Usa softRemove de TypeORM con @DeleteDateColumn
+    const task = await this.findOne(id, userId);
+    await this.taskRepository.softRemove(task);
     return { message: 'Tarea eliminada (Soft Delete)' };
   }
 }

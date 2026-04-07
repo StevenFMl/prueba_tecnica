@@ -6,7 +6,6 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // Requisito: GET /users/me — devuelve el perfil del usuario autenticado
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
   async getProfile(@Request() req) {
@@ -14,7 +13,6 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
-    // No devolver la contraseña al frontend
     const { password, ...result } = user;
     return result;
   }

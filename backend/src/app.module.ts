@@ -12,11 +12,11 @@ import { Task } from './tasks/entities/task.entity';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'root', // Si tienes contraseña en XAMPP, ponla aquí
+      username: 'root',
       password: '',
-      database: 'test_db', // Asegúrate de haber creado esta base en phpMyAdmin/XAMPP
+      database: 'test_db',
       entities: [User, Task],
-      synchronize: true, // Esto es vital hoy: crea las tablas automáticamente
+      synchronize: true,
     }),
     AuthModule,
     UsersModule,

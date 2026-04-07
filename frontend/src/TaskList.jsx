@@ -8,24 +8,24 @@ export function TaskList() {
     useEffect(() => { fetchTasks(); }, []);
 
     const fetchTasks = async () => {
-        const res = await api.get('/tasks'); // Requisito: Listar tareas [cite: 34]
+        const res = await api.get('/tasks');
         setTasks(res.data);
     };
 
     const handleCreate = async (e) => {
         e.preventDefault();
-        await api.post('/tasks', { title }); // Requisito: Crear tarea [cite: 35]
+        await api.post('/tasks', { title });
         setTitle('');
         fetchTasks();
     };
 
     const handleToggle = async (id, completed) => {
-        await api.put(`/tasks/${id}`, { completed: !completed }); // Requisito: Completar tarea [cite: 36]
+        await api.put(`/tasks/${id}`, { completed: !completed });
         fetchTasks();
     };
 
     const handleDelete = async (id) => {
-        await api.delete(`/tasks/${id}`); // Requisito: Eliminar tarea (Soft Delete) [cite: 37, 22]
+        await api.delete(`/tasks/${id}`);
         fetchTasks();
     };
 

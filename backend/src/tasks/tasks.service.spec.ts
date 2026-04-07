@@ -35,7 +35,6 @@ describe('TasksService', () => {
     expect(service).toBeDefined();
   });
 
-  // Test: Endpoint protegido — listar tareas del usuario
   describe('findAll', () => {
     it('debe devolver las tareas del usuario', async () => {
       const result = await service.findAll(1);
@@ -47,7 +46,6 @@ describe('TasksService', () => {
     });
   });
 
-  // Test: Crear tarea
   describe('create', () => {
     it('debe crear una tarea y asignarla al usuario', async () => {
       const dto = { title: 'Nueva tarea' };
@@ -60,7 +58,6 @@ describe('TasksService', () => {
     });
   });
 
-  // Test: Soft delete lanza NotFoundException si no existe
   describe('softDelete', () => {
     it('debe lanzar NotFoundException si la tarea no existe', async () => {
       mockRepository.findOne.mockResolvedValue(null);

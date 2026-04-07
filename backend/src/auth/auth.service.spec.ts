@@ -10,7 +10,6 @@ describe('AuthService', () => {
   let jwtService: Partial<JwtService>;
 
   beforeEach(async () => {
-    // Mock del UsersService
     usersService = {
       create: jest.fn().mockImplementation((dto) =>
         Promise.resolve({ id: 1, ...dto }),
@@ -18,7 +17,6 @@ describe('AuthService', () => {
       findByEmail: jest.fn(),
     };
 
-    // Mock del JwtService
     jwtService = {
       signAsync: jest.fn().mockResolvedValue('mock-jwt-token'),
     };
@@ -34,25 +32,21 @@ describe('AuthService', () => {
     authService = module.get<AuthService>(AuthService);
   });
 
-  // Test 1: Registro de usuario — debe encriptar la contraseña y guardar
   describe('register', () => {
     it('debe registrar un usuario con contraseña encriptada', async () => {
       const dto = { name: 'Test', email: 'test@test.com', password: '123456' };
       const result = await authService.register(dto);
 
-      // Verificar que se llamó create con una contraseña hasheada (no la original)
       expect(usersService.create).toHaveBeenCalled();
       const calledWith = (usersService.create as jest.Mock).mock.calls[0][0];
       expect(calledWith.email).toBe(dto.email);
-      expect(calledWith.password).not.toBe(dto.password); // Debe estar hasheada
+      expect(calledWith.password).not.toBe(dto.password);
 
-      // Verificar que el hash es válido
       const isMatch = await bcrypt.compare(dto.password, calledWith.password);
       expect(isMatch).toBe(true);
     });
   });
 
-  // Test 2: Login — debe devolver access_token si las credenciales son correctas
   describe('login', () => {
     it('debe devolver access_token con credenciales válidas', async () => {
       const hashedPassword = await bcrypt.hash('123456', 10);
