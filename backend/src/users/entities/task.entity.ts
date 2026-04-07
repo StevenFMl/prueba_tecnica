@@ -12,10 +12,10 @@ export class Task {
     @Column({ default: false })
     completed: boolean;
 
-    @ManyToOne(() => User, (user) => user.tasks) // Asumiendo que en User usas 'tasks'
+    @ManyToOne(() => User, (user) => user.tasks)
     user: User;
 
-    // Esto cumple el requisito del SOFT DELETE
+
     @DeleteDateColumn()
     deletedAt: Date;
 }
