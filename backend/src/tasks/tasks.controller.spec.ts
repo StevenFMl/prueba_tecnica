@@ -5,10 +5,18 @@ import { TasksService } from './tasks.service';
 describe('TasksController', () => {
   let controller: TasksController;
 
+  const mockTasksService = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    update: jest.fn(),
+    softDelete: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TasksController],
-      providers: [TasksService],
+      providers: [{ provide: TasksService, useValue: mockTasksService }],
     }).compile();
 
     controller = module.get<TasksController>(TasksController);
